@@ -1,8 +1,6 @@
 <!DOCTYPE html>
 <meta charset="utf-8">
 
-<svg width="960" height="500"></svg>
-
 <!-- Load d3.js you can use ither version if you want -->
 <script src="https://d3js.org/d3.v4.js"></script>
 
@@ -45,6 +43,7 @@
       .attr("value", function (d) { return d; }) // corresponding value returned by the button
 
     console.log(data);
+
     function format_arr(data, team, season) {
       var retdata = {}
 
@@ -58,10 +57,6 @@
       }
       return retdata;
     }
-
-
-
-
 
     function update(selectedTeam, selectedYear) {
       // d3.select("#my_dataviz").remove();
