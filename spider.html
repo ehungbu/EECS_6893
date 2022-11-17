@@ -1,9 +1,12 @@
 <!DOCTYPE html>
 <meta charset="utf-8">
 <script src="https://d3js.org/d3.v4.min.js"></script>
+<!-- Color scale -->
+<script src="https://d3js.org/d3-scale-chromatic.v1.min.js"></script>
 <!-- Create a div where the graph will take place -->
 <!-- <select id="selectButton2"></select> -->
 <!-- Initialize a select button -->
+<!-- Create a div where the graph will take place -->
 <select id="selectButtonTeam"></select>
 <select id="selectButtonYear"></select>
 <body>
@@ -19,18 +22,20 @@
      }
   </style>
 </body>
+<div id="spider"></div>
+<div id="my_dataviz"></div>
 <script>
-  var margin = {top: 20, right: 90, bottom: 50, left: 60},
+  var margin = {top: 20, right: 60, bottom: 50, left: 30},
       width = 460 - margin.left - margin.right,
       height = 400 - margin.top - margin.bottom;
   // let features = ["A","B","C","D","E","F"];
   let features = ["Score","Strikeouts","Stolen Bases","Total Bases","Walked Issued"];
   let table_feature = [{"Score": 0, "Score Ranking": 1, "Strikeouts": 0,"Strikeouts Ranking": 1, "Stolen Bases": 0, "Stolen Bases Ranking": 1, "Total Bases": 0, "Total Bases Ranking": 1, "Walked Issued": 0, "Walked Issued Ranking": 1}]
 
-  let svg = d3.select("body")
+  let svg = d3.select("#spider")
     .append("svg")
-      .attr("width", 800)
-      .attr("height", 800)
+      .attr("width", 650)
+      .attr("height", 650)
     .append("g")
       .attr("transform",
             "translate(" + margin.left + "," + margin.top + ")");
@@ -38,13 +43,13 @@
 
   let radialScale = d3.scaleLinear()
     .domain([0,10])
-    .range([0,250]);
+    .range([0,200]);
   let ticks = [2,4,6,8,10];
 
   let curTeam = "STL";
   let curYear = "2016";
 
-d3.csv('/data.csv', function(data) {
+d3.csv('https://raw.githubusercontent.com/ehungbu/EECS_6893/main/data.csv', function(data) {
   var teams = ["STL", "PIT", "TOR", "TB", "NYM", "KC", "SF", "MIL", "MIN", "BAL", "SEA", "TEX", "WSH", "ATL", "PHI", "CIN", "LAD", "SD", "COL", "ARI", "CHC", "LAA", "CHW", "OAK", "HOU", "NYY", "BOS", "CLE", "DET"]
   var years = ["2016", "2017", "2018", "2019", "2020", "2021"]
   var point = {}
@@ -91,7 +96,7 @@ d3.csv('/data.csv', function(data) {
       if(data[i]['total_bases'] > table_feature[0]['Total Bases']) {
         table_feature[0]['Total Bases Ranking'] += 1
       }
-      if(data[i]['walks_issued'] > table_feature[0]['Walked Issued']) {
+      if(data[i]['walks_issued'] < table_feature[0]['Walked Issued']) {
         table_feature[0]['Walked Issued Ranking'] += 1
       }
     }
@@ -135,6 +140,20 @@ d3.csv('/data.csv', function(data) {
     let y = Math.sin(angle) * radialScale(value);
     return {"x": 300 + x, "y": 300 - y};
   }
+
+  function format_arr(data, team, season) {
+      var retdata = {}
+
+      for (var i = 0; i < data.length; i++) {
+        // console.log(data[i]['team'], data[i]['season'])
+        if (data[i]['team'] === team && data[i]['season'] === season) {
+          retdata['wins'] = data[i]['wins']
+          retdata['losses'] = data[i]['losses']
+          break;
+        }
+      }
+      return retdata;
+    }
 
   for (var i = 0; i < features.length; i++) {
     let ft_name = features[i];
@@ -198,6 +217,10 @@ d3.csv('/data.csv', function(data) {
   
     
   function update(selectedTeam, selectedYear) {
+    d3.select('#my_dataviz')
+    .select('svg')
+    .remove();
+
     var newpoint = {}
     mx_score = 0, mx_so = 0, mx_sb = 0, mx_tb = 0, mx_wi = 0
     table_feature = [{"Score": 0, "Score Ranking": 1, "Strikeouts": 0,"Strikeouts Ranking": 1, "Stolen Bases": 0, "Stolen Bases Ranking": 1, "Total Bases": 0, "Total Bases Ranking": 1, "Walked Issued": 0, "Walked Issued Ranking": 1}]
@@ -235,7 +258,6 @@ d3.csv('/data.csv', function(data) {
           table_feature[0]['Score Ranking'] += 1
         }
         if(data[i]['strikeouts'] > table_feature[0]['Strikeouts']) {
-          console.log(data[i]['strikeouts'], table_feature[0]['Strikeouts Ranking'])
           table_feature[0]['Strikeouts Ranking'] += 1
         }
         if(data[i]['stolen_bases'] > table_feature[0]['Stolen Bases']) {
@@ -244,7 +266,7 @@ d3.csv('/data.csv', function(data) {
         if(data[i]['total_bases'] > table_feature[0]['Total Bases']) {
           table_feature[0]['Total Bases Ranking'] += 1
         }
-        if(data[i]['walks_issued'] > table_feature[0]['Walked Issued']) {
+        if(data[i]['walks_issued'] < table_feature[0]['Walked Issued']) {
           table_feature[0]['Walked Issued Ranking'] += 1
         }
       }
@@ -261,10 +283,101 @@ d3.csv('/data.csv', function(data) {
     .transition()
     .duration(100);
 
-     td.data(function(d, i) { return Object.values(d); })
-     .transition()
-     .duration(100)
-     .text(function(d) { return d; });
+    td.data(function(d, i) { return Object.values(d); })
+    .transition()
+    .duration(100)
+    .text(function(d) { return d; });
+
+    console.log(selectedTeam, selectedYear)
+    var wins_losses_dict = format_arr(data, selectedTeam, selectedYear)
+    console.log(wins_losses_dict)
+    var total_games = parseInt(wins_losses_dict['wins'])+ parseInt(wins_losses_dict['losses'])
+    console.log(total_games)
+    // // set the dimensions and margins of the graph
+      var width = 450
+      height = 450
+      margin = 40
+
+      // The radius of the pieplot is half the width or half the height (smallest one). I subtract a bit of margin.
+      var radius = Math.min(width, height) / 2 - margin
+
+      // append the svg object to the div called 'my_dataviz'
+      var piechart = d3.select("#my_dataviz")
+        .append("svg")
+        .attr("width", width)
+        .attr("height", height)
+        .append("g")
+        .attr("transform", "translate(" + width / 2 + "," + height / 2 + ")");
+
+      // set the color scale
+      var color = d3.scaleOrdinal()
+        .domain(data)
+        .range(d3.schemeSet2);
+
+      // Compute the position of each group on the pie:
+      var pie = d3.pie()
+        .value(function(d) {return d.value; })
+        .sort(function (d) {
+          return d3.ascending(d.key);
+        })
+      var data_ready = pie(d3.entries(wins_losses_dict))
+
+
+      // Now I know that group A goes from 0 degrees to x degrees and so on.
+
+      // shape helper to build arcs:
+      var arcGenerator = d3.arc()
+        .innerRadius(0)
+        .outerRadius(radius)
+
+      var label = d3.arc()
+        .outerRadius(radius + 230)
+        .innerRadius(0);
+
+      // Build the pie chart: Basically, each part of the pie is a path that we build using the arc function.
+      piechart
+        .selectAll('mySlices')
+        .data(data_ready)
+        .enter()
+        .append('path')
+        .merge(piechart)
+        .transition()
+        .duration(1000)
+        .attr('d', arcGenerator)
+        .attr('fill', function(d){ return(color(d.data.key)) })
+        .attr("stroke", "black")
+        .style("stroke-width", "2px")
+        .style("opacity", 0.7)
+
+      // Now add the annotation. Use the centroid method to get the best coordinates
+      piechart
+        .selectAll('mySlices')
+        .data(data_ready)
+        .enter()
+        .append('text')
+        .text(function(d){ return d.data.value + " " + d.data.key})
+        .attr("transform", function(d) { return "translate(" + arcGenerator.centroid(d) + ")";  })
+        .style("text-anchor", "middle")
+        .style("font-size", 17)
+
+
+      // Now add the label
+      piechart
+        .selectAll('mySlices')
+        .data(data_ready)
+        .enter()
+        .append('text')
+        .text(function(d){ return (d.data.value / total_games * 100).toFixed(2) + '%'})
+        .attr("transform", function(d) { return "translate(" + label.centroid(d) + ")";  })
+        .style("text-anchor", "middle")
+        .style("font-size", 12)
+
+      // appending the svg object to the svg id of the page
+      var piechart = d3.select("svg"),
+        width = +piechart.attr("width"),
+        height = +piechart.attr("height"),
+        radius = Math.min(width, height) / 2,
+        g = svg.append("g").attr("transform", "translate(" + width / 2 + "," + height / 2 + ")");
   }
 
   update(curTeam, curYear);
