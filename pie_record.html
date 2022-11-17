@@ -95,6 +95,9 @@
       // Compute the position of each group on the pie:
       var pie = d3.pie()
         .value(function(d) {return d.value; })
+        .sort(function (d) {
+          return d3.ascending(d.key);
+        })
       var data_ready = pie(d3.entries(wins_losses_dict))
 
 
