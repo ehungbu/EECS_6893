@@ -1,0 +1,315 @@
+<!DOCTYPE html>
+<meta charset="utf-8">
+<script src="https://d3js.org/d3.v4.min.js"></script>
+<!-- Color scale -->
+<script src="https://d3js.org/d3-scale-chromatic.v1.min.js"></script>
+<!-- Create a div where the graph will take place -->
+<!-- <select id="selectButton2"></select> -->
+<!-- Initialize a select button -->
+<!-- Create a div where the graph will take place -->
+<h1>
+  <style>
+    h1 {
+      text-align: center;
+    }
+  </style>
+MLB Top 10 Players of the Year
+</h1>
+<h2>
+  <style>
+    .id {
+      float: left;
+      margin-left: 10px;
+    }
+  </style>
+<div>
+<select id="selectButtonYear"></select>
+<select id="selectButtonCatPitch"></select>
+<select id="selectButtonCatHitter"></select>
+</div>
+</h2>
+<body>
+  <style>
+    body {
+        font-family: Arial, Helvetica, sans-serif;
+    }
+    .container {
+      float: left;
+      margin-left: 10px;
+    }
+  </style>
+  <div class="container" id="chart1"></div>
+  <div class="container" id="chart2"></div>
+</body>
+<script>
+let curYear = "2016"
+let curPitchCat = "IP"
+let curHitterCat = "AB"
+var margin = {top: 20, right: 50, bottom: 50, left: 60},
+    width = 350,
+    height = 330;
+
+// append the svg object to the body of the page
+var svg1 = d3.select("#chart1")
+  .append("svg")
+    .attr("width", width + margin.left + margin.right)
+    .attr("height", height + margin.top + margin.bottom)
+  .append("g")
+    .attr("transform",
+          "translate(" + margin.left + "," + margin.top + ")");
+var svg2 = d3.select("#chart2")
+  .append("svg")
+    .attr("width", width + margin.left + margin.right)
+    .attr("height", height + margin.top + margin.bottom)
+  .append("g")
+    .attr("transform",
+          "translate(" + margin.left + "," + margin.top + ")");
+d3.csv('https://raw.githubusercontent.com/ehungbu/EECS_6893/main/hitter_top10.csv', function(hitter_data) {
+  d3.csv('https://raw.githubusercontent.com/ehungbu/EECS_6893/main/pitcher_top10.csv', function(pitcher_data) {
+
+    var years = ["2016", "2017", "2018", "2019", "2020", "2021"]
+    var pitcher_cat = ["IP", "H", "R", "ER", "BB", "K", "HR", "ERA"]
+    var hitter_cat = ["AB", "R", "H", "RBI", "BB", "K", "SLG", "AVG", "OBP"]
+
+    d3.select("#selectButtonYear")
+      .selectAll('myYears')
+      .data(years)
+      .enter()
+      .append('option')
+      .text(function (d) { return d; }) // text showed in the menu
+      .attr("value", function (d) { return d; }) // corresponding value returned by the button
+
+    d3.select("#selectButtonCatPitch")
+      .selectAll('myOptions')
+      .data(pitcher_cat)
+      .enter()
+      .append('option')
+      .text(function (d) { return d; }) // text showed in the menu
+      .attr("value", function (d) { return d; })
+
+    d3.select("#selectButtonCatHitter")
+      .selectAll('myOptions')
+      .data(hitter_cat)
+      .enter()
+      .append('option')
+      .text(function (d) { return d; }) // text showed in the menu
+      .attr("value", function (d) { return d; })
+
+    var filter_pitcher_data = pitcher_data.filter(function(d){
+        return d['Season'] === curYear && d['Indicator'] === curPitchCat;
+    }).map(function(d){ return {name: d['Pitcher'], team: d['Team'], value: parseFloat(d['Value'])}; })
+
+
+    var filter_hitter_data = hitter_data.filter(function(d){
+        return d['Season'] === curYear && d['Indicator'] === curHitterCat;
+    }).map(function(d){ return {name: d['Hitter'], team: d['Team'], value: parseFloat(d['Value'])}; })
+
+    var pitcher_x = d3.scaleBand()  
+        .range([0, width])
+        .domain(filter_pitcher_data.map(function(d) { return d.name; }))
+        .padding(0.2);
+    var pitcher_xAxis = d3.axisBottom(pitcher_x)
+    svg1.append("g")
+        .attr("transform", "translate(0," + height + ")")
+        .attr("class", "myXaxis")
+        .call(pitcher_xAxis)
+        .selectAll("text")
+        .attr("transform", "rotate(-20)")
+
+    var pitcher_xlabel = svg1.append("text")             
+        .attr("transform",
+              "translate(" + (width/2) + " ," + 
+                             (height + margin.top + 20) + ")")
+        .style("text-anchor", "middle")
+        .text("Team / Pitcher");
+
+    var hitter_x = d3.scaleBand()  
+        .range([0, width])
+        .domain(filter_hitter_data.map(function(d) { return d.name; }))
+        .padding(0.2);
+    var hitter_xAxis = d3.axisBottom(hitter_x)
+    svg2.append("g")
+        .attr("transform", "translate(0," + height + ")")
+        .attr("class", "myXaxis")
+        .call(hitter_xAxis)
+        .selectAll("text")
+        .attr("transform", "rotate(-20)")
+
+    var hitter_xlabel = svg2.append("text")             
+        .attr("transform",
+              "translate(" + (width/2) + " ," + 
+                             (height + margin.top + 20) + ")")
+        .style("text-anchor", "middle")
+        .text("Team / Hitter");
+
+    
+
+    var pitcher_y = d3.scaleLinear()
+        .range([height, 0]);
+    pitcher_y.domain([0, d3.max(filter_pitcher_data, function(d) {return +d.value; })]);
+
+    var pitcher_yAxis = d3.axisLeft().scale(pitcher_y);
+    svg1.append("g")
+        .attr("class", "myYaxis")
+        .call(pitcher_yAxis);
+
+    // text label for the y axis
+    var pitcher_ylabel = svg1.append("text")
+        .attr("transform", "rotate(-90)")
+        .attr("y", 0 - margin.left)
+        .attr("x",0 - (height / 2))
+        .attr("dy", "1em")
+        .style("text-anchor", "middle")
+        .text("Total Value");
+
+    // text label for the y axis
+    svg1.append("text")
+      .attr("transform", "rotate(-90)")
+      .attr("y", 0 - margin.left)
+      .attr("x",0 - (height / 2))
+      .attr("dy", "1em")
+      .style("text-anchor", "middle")
+
+    // var pitcher_u = svg1.selectAll("mybar")
+    // .data(filter_pitcher_data)
+    // .enter()
+    // .append("rect")
+    // .attr("x", function(d) { return pitcher_x(d.name); })
+    // .attr("y", function(d) { return pitcher_y(d.value); })
+    // .attr("width", pitcher_x.bandwidth())
+    // .attr("height", function(d) { return height - pitcher_y(d.value); })
+    // .style("fill", "#69b3a2")
+
+    var hitter_y = d3.scaleLinear()
+        .range([height, 0]);
+    hitter_y.domain([0, d3.max(filter_hitter_data, function(d) {return +d.value; })]);
+    var hitter_yAxis = d3.axisLeft().scale(hitter_y);
+    svg2.append("g")
+        .attr("class", "myYaxis")
+        .call(hitter_yAxis);
+
+    // text label for the y axis
+    var hitter_ylabel = svg2.append("text")
+        .attr("transform", "rotate(-90)")
+        .attr("y", 0 - margin.left)
+        .attr("x",0 - (height / 2))
+        .attr("dy", "1em")
+        .style("text-anchor", "middle")
+        .text("Total Value");
+
+    // text label for the y axis
+    svg2.append("text")
+      .attr("transform", "rotate(-90)")
+      .attr("y", 0 - margin.left)
+      .attr("x",0 - (height / 2))
+      .attr("dy", "1em")
+      .style("text-anchor", "middle")
+
+    // var hitter_u = svg2.selectAll("mybar")
+    // .data(filter_hitter_data)
+    // .enter()
+    // .append("rect")
+    // .attr("x", function(d) { return hitter_x(d.name); })
+    // .attr("y", function(d) { return hitter_y(d.value); })
+    // .attr("width", hitter_x.bandwidth())
+    // .attr("height", function(d) { return height - hitter_y(d.value); })
+    // .style("fill", "#69b3a2")
+
+    function update(selectedYear, selectedPitchCat, selectedHitterCat) {
+      var new_pitch_data = pitcher_data.filter(function(d){
+        return d['Season'] === selectedYear && d['Indicator'] === selectedPitchCat;
+      }).map(function(d){ return {name: d['Pitcher'], team: d['Team'], value: d['Value']}; })
+      console.log(new_pitch_data)
+
+      var new_hitter_data = hitter_data.filter(function(d){
+          return d['Season'] === selectedYear && d['Indicator'] === selectedHitterCat;
+      }).map(function(d){ return {name: d['Hitter'], team: d['Team'], value: d['Value']}; })
+      console.log(new_hitter_data)
+
+      pitcher_x.domain(new_pitch_data.map(function(d) { return d.name; }))
+      svg1.selectAll(".myXaxis")
+        .transition()
+        .duration(500)
+        .call(pitcher_xAxis)
+        .selectAll("text")
+        .attr("transform", "rotate(-20)")
+      hitter_x.domain(new_hitter_data.map(function(d) { return d.name; }))
+      svg2.selectAll(".myXaxis")
+        .transition()
+        .duration(500)
+        .call(hitter_xAxis)
+        .selectAll("text")
+        .attr("transform", "rotate(-20)")
+
+      pitcher_y.domain([0, d3.max(new_pitch_data, function(d) {return +d.value; })]);
+      svg1.selectAll(".myYaxis")
+        .transition()
+        .duration(500)
+        .call(pitcher_yAxis);
+
+      hitter_y.domain([0, d3.max(new_hitter_data, function(d) {return +d.value; })]);
+      svg2.selectAll(".myYaxis")
+        .transition()
+        .duration(500)
+        .call(hitter_yAxis);
+
+      var pitcher_u = svg1.selectAll("rect").data(new_pitch_data)
+      pitcher_u
+      .enter()
+      .append("rect")
+      .merge(pitcher_u)
+      .transition()
+      .duration(500)
+        .attr("x", function(d) { return pitcher_x(d.name); })
+        .attr("y", function(d) { return pitcher_y(d.value); })
+        .attr("width", pitcher_x.bandwidth())
+        .attr("height", function(d) { return height - pitcher_y(d.value); })
+        .style("fill", "#69b3a2")
+      pitcher_u.exit().remove()
+
+      var hitter_u = svg2.selectAll("rect").data(new_hitter_data)
+      hitter_u
+      .enter()
+      .append("rect")
+      .merge(hitter_u)
+      .transition()
+      .duration(500)
+        .attr("x", function(d) { return hitter_x(d.name); })
+        .attr("y", function(d) { return hitter_y(d.value); })
+        .attr("width", hitter_x.bandwidth())
+        .attr("height", function(d) { return height - hitter_y(d.value); })
+        .style("fill", "#69b3a2")
+      hitter_u.exit().remove()
+    }
+
+    update(curYear, curPitchCat, curHitterCat);
+
+    // When the button is changed, run the updateChart function
+    d3.select("#selectButtonCatPitch").on("change", function(d) {
+      // recover the option that has been chosen
+      curPitchCat = d3.select(this).property("value")
+      // run the updateChart function with this selected option
+      update(curYear, curPitchCat, curHitterCat);
+    })
+
+    // When the button is changed, run the updateChart function
+    d3.select("#selectButtonCatHitter").on("change", function(d) {
+      // recover the option that has been chosen
+      curHitterCat = d3.select(this).property("value")
+      // run the updateChart function with this selected option
+      update(curYear, curPitchCat, curHitterCat);
+    })
+
+    // When the button is changed, run the updateChart function
+    d3.select("#selectButtonYear").on("change", function(d) {
+      // recover the option that has been chosen
+      curYear = d3.select(this).property("value")
+      // run the updateChart function with this selected option
+      update(curYear, curPitchCat, curHitterCat);
+    })
+  });
+});
+
+</script>
+
+  
