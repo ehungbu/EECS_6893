@@ -8,6 +8,7 @@ class LineGraph extends Component {
 
   drawChart() {
     console.log("LineGraph Component")
+
     // set the dimensions and margins of the graph
     // You can change these values these are just sample values given
     var margin = {top: 10, right: 10, bottom: 30, left: 60},
@@ -24,6 +25,7 @@ class LineGraph extends Component {
         "translate(" + margin.left + "," + margin.top + ")");
     let curTeam = "STL";
     let curCat = "score";
+    // console.log('line:', curTeam, curCat)
     let data = []
     d3.csv("https://raw.githubusercontent.com/ehungbu/EECS_6893/main/data.csv", function(d) {
       // console.log('data', data)
@@ -106,6 +108,13 @@ class LineGraph extends Component {
         )
 
       function update(selectButtonTeam, selectButtonCat) {
+        console.log('update line: ', selectButtonTeam, selectButtonCat)
+
+        // Update both graphs using hidden button
+        let element = document.getElementById("selectButtonTeamPie");
+        element.value = selectButtonTeam;
+        var event = new Event('change');
+        element.dispatchEvent(event);
 
         var new_data = data.filter(function(d){
           return d['team'] == selectButtonTeam;

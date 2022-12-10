@@ -8,10 +8,10 @@
 <div id="my_dataviz"></div>
 
 <!-- Initialize a select button -->
-<select id="selectButton"></select>
+<select id="selectButtonSeason"></select>
 
 <!-- Initialize a select button -->
-<select id="selectButton2"></select>
+<select id="selectButtonTeam"></select>
 
 <!-- Color scale -->
 <script src="https://d3js.org/d3-scale-chromatic.v1.min.js"></script>
@@ -19,22 +19,18 @@
 <script>
   d3.csv("https://raw.githubusercontent.com/ehungbu/EECS_6893/main/data.csv", function(data) {
 
-    var allGroup = ["STL", "PIT", "TOR", "TB",
-    "NYM", "KC", "SF", "MIL", "MIN", "BAL", "SEA", "TEX",
-    "WSH", "ATL", "PHI", "CIN", "LAD", "SD", "COL", "ARI", "CHC",
-    "LAA", "CHW", "OAK", "HOU", "NYY", "BOS", "CLE", "DET", "MIA"]
-
+    var teams = ["STL", "PIT", "TOR", "TB", "NYM", "KC", "SF", "MIL", "MIN", "BAL", "SEA", "TEX", "WSH", "ATL", "PHI", "CIN", "LAD", "SD", "COL", "ARI", "CHC", "LAA", "CHW", "OAK", "HOU", "NYY", "BOS", "CLE", "DET"]
     var years = ["2016", "2017", "2018", "2019", "2020", "2021"]
 
-    d3.select("#selectButton")
+    d3.select("#selectButtonSeason")
       .selectAll('myOptions')
-      .data(allGroup)
+      .data(teams)
       .enter()
       .append('option')
       .text(function (d) { return d; }) // text showed in the menu
       .attr("value", function (d) { return d; }) // corresponding value returned by the button
 
-    d3.select("#selectButton2")
+    d3.select("#selectButtonTeam")
       .selectAll('myOptions')
       .data(years)
       .enter()
@@ -98,7 +94,29 @@
         .sort(function (d) {
           return d3.ascending(d.key);
         })
-      var data_ready = pie(d3.entries(wins_losses_dict))
+
+      let wins_losses_array_dict = [{}, {}]
+      // console.log(wins_losses_array_dict)
+      let index = 0
+      for (const [key, value] of Object.entries(wins_losses_dict)) {
+        // console.log(key, value);
+        wins_losses_array_dict[index]['key'] = key
+        wins_losses_array_dict[index]['value'] = value
+        index++
+      }
+      // console.log(wins_losses_array_dict[0], wins_losses_array_dict[1])
+
+      console.log(wins_losses_dict)
+      console.log('d3:', d3.entries(wins_losses_dict))
+      console.log('forloop:', wins_losses_array_dict)
+      console.log('object:', Object.entries(wins_losses_dict))
+
+
+      var data_ready = pie(wins_losses_array_dict)
+      // var data_ready = pie(d3.(wins_losses_dict))
+
+
+
 
 
       // Now I know that group A goes from 0 degrees to x degrees and so on.
@@ -160,7 +178,7 @@
     }
 
     // When the button is changed, run the updateChart function
-    d3.select("#selectButton").on("change", function(d) {
+    d3.select("#selectButtonSeason").on("change", function(d) {
       // recover the option that has been chosen
       var selectedOption = d3.select(this).property("value")
       selectedTeam = selectedOption
@@ -169,7 +187,7 @@
     })
 
     // When the button is changed, run the updateChart function
-    d3.select("#selectButton2").on("change", function(d) {
+    d3.select("#selectButtonTeam").on("change", function(d) {
       // recover the option that has been chosen
       var selectedOption = d3.select(this).property("value")
       selectedYear = selectedOption
@@ -180,12 +198,6 @@
     var selectedTeam = "STL"
     var selectedYear = "2016"
     update(selectedTeam, selectedYear);
-
-
   });
 
-
-
-
-// });
 </script>
