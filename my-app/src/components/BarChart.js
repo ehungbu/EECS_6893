@@ -16,14 +16,14 @@ class BarChart extends Component {
       height = 400 - margin.top - margin.bottom;
 
     // append the svg object to the body of the page
-    var svg = d3.select("body")
+    var svg = d3.select("#dataviz")
       .append("svg")
       .attr("width", width + margin.left + margin.right)
       .attr("height", height + margin.top + margin.bottom)
       .append("g")
       .attr("transform",
         "translate(" + margin.left + "," + margin.top + ")");
-    svg.selectAll("*").remove()
+    // svg.selectAll("*").remove()
 
     // console.log(result)
     let data = []
@@ -105,8 +105,9 @@ class BarChart extends Component {
   }
 
   render(){
-    // return <div id={"#" + this.props.id}></div>
-    return <div ref="chart"></div>
+    console.log("#" + this.props.id)
+    return <div id={"#" + this.props.id}></div>
+    // return <div ref="bar"></div>
   }
 }
 

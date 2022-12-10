@@ -10,7 +10,9 @@ export function Team() {
   return (
     <div>
       <Heading level={2}>Team</Heading>
-      <BarChart></BarChart>
+      <div id="dataviz">
+        <BarChart></BarChart>
+      </div>
     </div>
   );
 }
