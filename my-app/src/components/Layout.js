@@ -8,6 +8,8 @@ export function Layout() {
 
   return (
     <>
+      <Heading level={1}>MLB Outcome Predictor</Heading>
+      <br/>
       <nav>
         <Button onClick={() => navigate('/')}>Home</Button>
         <Button onClick={() => navigate('/predict')}>
@@ -20,7 +22,7 @@ export function Layout() {
           Team
         </Button>
       </nav>
-      <Heading level={1}>MLB Outcome Predictor</Heading>
+
       <Outlet />
     </>
   );
