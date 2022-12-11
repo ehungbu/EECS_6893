@@ -33,7 +33,7 @@ class LeagueTeamBar extends Component {
     }).then(_ => {
       // console.log(data[0])
       var allCat = ["score", "walks_issued", "total_bases", "strikeouts", "stolen_bases"]
-      var seasons = ["2016", "2017", "2018", "2019", "2020" ]
+      var seasons = ["2016", "2017", "2018", "2019", "2020", "2021"]
 
       d3.select("#selectButtonSeason")
         .selectAll('myOptions')
