@@ -5,5 +5,7 @@ Semester: Fall 2022
 -----
 
 ## Summary
+`visualizations` directory contains html files containing our d3 visualizations.
 
+`my-app` contains our front end created in react
 
