@@ -1,4 +1,9 @@
-# EECS_6893
-Kuraloviyan Senthilnathan
-Ethan Hung
-Cheng-Yu Chen
+# EECS_6893 MLB Outcome Predictor Project
+Authors: Cheng-Yu Chen, Ethan Hung, Kuraloviyan Senthilnathan
+
+Semester: Fall 2022
+-----
+
+## Summary
+
+
