@@ -116,6 +116,14 @@ class LeagueTeamBar extends Component {
 
 
       function update(selectButtonseason, selectButtonCat) {
+        console.log('update TeamBar: ', selectButtonseason, selectButtonCat)
+
+        // Update both graphs using hidden button
+        let element = document.getElementById("selectButtonSeasonTopPlayers");
+        element.value = selectButtonseason;
+        var event = new Event('change');
+        element.dispatchEvent(event);
+
         var new_data = data.filter(function(d){
           return d['season'] === selectButtonseason;
         }).map(function(d){ return {team: d['team'], value: parseInt(d[selectButtonCat])}; })
@@ -136,7 +144,7 @@ class LeagueTeamBar extends Component {
           .duration(1000)
           .call(yAxis);
 
-        console.log(new_data)
+        // console.log(new_data)
 
 
         u

@@ -4,6 +4,9 @@ import {Heading} from "@aws-amplify/ui-react";
 import * as d3 from "d3";
 import LineGraph from "./LineGraph";
 import Pie from "./Pie"
+import { Container, Col, Row} from "react-bootstrap";
+
+
 
 export function Team() {
   return (
@@ -17,13 +20,23 @@ export function Team() {
       {/*<div id="dataviz">*/}
       {/*  <BarChart></BarChart>*/}
       {/*</div>*/}
+      <Container>
+        <Row>
+          <Col>
+            <div id="linegraph">
+              <LineGraph></LineGraph>
+            </div>
+          </Col>
+          <Col>
+            <div id="pie">
+              <Pie></Pie>
+            </div>
+          </Col>
+        </Row>
+      </Container>
 
-      <div id="linegraph">
-        <LineGraph></LineGraph>
-      </div>
-      <div id="pie">
-        <Pie></Pie>
-      </div>
+
+
     </div>
   );
 }
