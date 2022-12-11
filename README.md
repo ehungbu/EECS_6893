@@ -1,4 +1,4 @@
 # EECS_6893
-kuraloviyan
-ethan hung
-cheng yu chen
+Kuraloviyan Senthilnathan
+Ethan Hung
+Cheng-Yu Chen
