@@ -111,10 +111,16 @@ class LineGraph extends Component {
         console.log('update line: ', selectButtonTeam, selectButtonCat)
 
         // Update both graphs using hidden button
-        let element = document.getElementById("selectButtonTeamPie");
-        element.value = selectButtonTeam;
-        var event = new Event('change');
-        element.dispatchEvent(event);
+        let element_team_pie = document.getElementById("selectButtonTeamPie");
+        element_team_pie.value = selectButtonTeam;
+        var event_team_pie = new Event('change');
+        element_team_pie.dispatchEvent(event_team_pie);
+
+        // Update both graphs using hidden button
+        let element_team_table = document.getElementById("selectButtonTeamTable");
+        element_team_table.value = selectButtonTeam;
+        var event_team_table = new Event('change');
+        element_team_table.dispatchEvent(event_team_table);
 
         var new_data = data.filter(function(d){
           return d['team'] == selectButtonTeam;

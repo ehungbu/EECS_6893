@@ -39,6 +39,8 @@ let curTeam = "STL";
 let curYear = "2016"
 d3.text('https://raw.githubusercontent.com/ehungbu/EECS_6893/main/hitter_data.csv', function(hitter_data) {
   d3.text('https://raw.githubusercontent.com/ehungbu/EECS_6893/main/pitcher_data.csv', function(pitcher_data) {
+    // console.log(hitter_data)
+    // console.log(pitcher_data)
     var teams = ["STL", "PIT", "TOR", "TB", "NYM", "KC", "SF", "MIL", "MIN", "BAL", "SEA", "TEX", "WSH", "ATL", "PHI", "CIN", "LAD", "SD", "COL", "ARI", "CHC", "LAA", "CHW", "OAK", "HOU", "NYY", "BOS", "CLE", "DET"]
     var years = ["2016", "2017", "2018", "2019", "2020", "2021"]
     var rows_hitter = d3.csvParseRows(hitter_data),
@@ -51,6 +53,7 @@ d3.text('https://raw.githubusercontent.com/ehungbu/EECS_6893/main/hitter_data.cs
                   .style("border-collapse", "collapse")
                   .style("border", "2px black solid");
         caption_pitcher = table_pitcher.append("caption").style("font-size", "20px").text("Pitcher");
+    console.log('rows_hitter:', rows_hitter)
     var display_rows_hitter = [rows_hitter[0]],
         display_rows_pitcher = [rows_pitcher[0]]
     for(var i = 1; i < rows_hitter.length; i++) {
@@ -94,7 +97,7 @@ d3.text('https://raw.githubusercontent.com/ehungbu/EECS_6893/main/hitter_data.cs
 
     // data
     table_hitter.append("tbody")
-      .selectAll("tr").data(display_rows_hitter.slice(1))
+      .selectAll("tr").data(display_rows_hitter.slice(0))
       .enter().append("tr")
       .selectAll("td")
       .data(function(d){return d;})
@@ -124,7 +127,7 @@ d3.text('https://raw.githubusercontent.com/ehungbu/EECS_6893/main/hitter_data.cs
 
     // data
     table_pitcher.append("tbody")
-      .selectAll("tr").data(display_rows_pitcher.slice(1))
+      .selectAll("tr").data(display_rows_pitcher.slice(0))
       .enter().append("tr")
       .selectAll("td")
       .data(function(d){return d;})
@@ -170,7 +173,7 @@ d3.text('https://raw.githubusercontent.com/ehungbu/EECS_6893/main/hitter_data.cs
 
       table_hitter
       .selectAll('tr')
-      .data(dr_hitter.slice(1))
+      .data(dr_hitter.slice(0))
       .enter().append("tr")
       .selectAll("td")
       .data(function(d){return d;})
@@ -200,7 +203,7 @@ d3.text('https://raw.githubusercontent.com/ehungbu/EECS_6893/main/hitter_data.cs
 
       table_pitcher
       .selectAll('tr')
-      .data(dr_pitcher.slice(1))
+      .data(dr_pitcher.slice(0))
       .enter().append("tr")
       .selectAll("td")
       .data(function(d){return d;})

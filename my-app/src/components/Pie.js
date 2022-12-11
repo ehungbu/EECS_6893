@@ -56,6 +56,12 @@ class Pie extends Component {
       }
 
       function update(selectedTeam, selectedYear) {
+        // Update both graphs using hidden button
+        let element_season_table = document.getElementById("selectButtonSeasonTable");
+        element_season_table.value = selectedYear;
+        var event_season_table = new Event('change');
+        element_season_table.dispatchEvent(event_season_table);
+
         d3.select('#pie')
           .select('svg')
           .remove();
