@@ -3,6 +3,7 @@ import React from 'react';
 import {Heading} from "@aws-amplify/ui-react";
 import LineGraph from "./LineGraph";
 import Pie from "./Pie"
+import Spider from "./Spider"
 import { Container, Col, Row} from "react-bootstrap";
 import TeamPlayersTable from "./TeamPlayersTable";
 
@@ -19,9 +20,9 @@ export function Team() {
       <select id="selectButtonSeason"></select>
       <select id="selectButtonSeasonTable" hidden></select>
       <select id="selectButtonTeamTable" hidden></select>
-      {/*<div id="dataviz">*/}
-      {/*  <BarChart></BarChart>*/}
-      {/*</div>*/}
+      <select id="selectButtonSeasonSpider" hidden></select>
+      <select id="selectButtonTeamSpider" hidden></select>
+      <Spider></Spider>
       <Container>
         <Row>
           <Col>
@@ -36,14 +37,16 @@ export function Team() {
           </Col>
         </Row>
         <Row>
+          <div id="mydataviz"></div>
+          <div id="spider"></div>
+        </Row>
+        <Row>
           <TeamPlayersTable></TeamPlayersTable>
           <Col>
-            <div id="tablehitters">
-            </div>
+            <div id="tablehitters"></div>
           </Col>
           <Col>
-            <div id="tablepitchers">
-            </div>
+            <div id="tablepitchers"></div>
           </Col>
         </Row>
       </Container>

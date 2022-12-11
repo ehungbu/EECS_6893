@@ -62,6 +62,12 @@ class Pie extends Component {
         var event_season_table = new Event('change');
         element_season_table.dispatchEvent(event_season_table);
 
+        // Update both graphs using hidden button
+        let element_season_spider = document.getElementById("selectButtonSeasonSpider");
+        element_season_spider.value = selectedYear;
+        var event_season_spider = new Event('change');
+        element_season_spider.dispatchEvent(event_season_spider);
+
         d3.select('#pie')
           .select('svg')
           .remove();

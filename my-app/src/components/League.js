@@ -30,7 +30,6 @@ export function League() {
         <Row>
           <Col>
             <select id="selectButtonCatPitch"></select>
-
             <div id="toppitchers"></div>
           </Col>
           <Col>

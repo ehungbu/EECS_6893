@@ -122,6 +122,12 @@ class LineGraph extends Component {
         var event_team_table = new Event('change');
         element_team_table.dispatchEvent(event_team_table);
 
+        // Update both graphs using hidden button
+        let element_team_spider = document.getElementById("selectButtonTeamSpider");
+        element_team_spider.value = selectButtonTeam;
+        var event_team_spider = new Event('change');
+        element_team_spider.dispatchEvent(event_team_spider);
+
         var new_data = data.filter(function(d){
           return d['team'] == selectButtonTeam;
         }).map(function(d){ return {season: d['season'], value: d[selectButtonCat]}; })

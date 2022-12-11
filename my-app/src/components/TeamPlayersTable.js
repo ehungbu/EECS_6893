@@ -26,8 +26,8 @@ class TeamPlayersTable extends Component {
       }).then(_ => {
         hitter_data = [cols_hitter].concat(hitter_data)
         pitcher_data = [cols_pitcher].concat(pitcher_data)
-        console.log(hitter_data)
-        console.log(pitcher_data)
+        // console.log(hitter_data)
+        // console.log(pitcher_data)
         var teams = ["STL", "PIT", "TOR", "TB", "NYM", "KC", "SF", "MIL", "MIN", "BAL", "SEA", "TEX", "WSH", "ATL", "PHI", "CIN", "LAD", "SD", "COL", "ARI", "CHC", "LAA", "CHW", "OAK", "HOU", "NYY", "BOS", "CLE", "DET"]
         var years = ["2016", "2017", "2018", "2019", "2020", "2021"]
         // var rows_hitter = d3.csvParseRows(hitter_data),
@@ -132,6 +132,7 @@ class TeamPlayersTable extends Component {
           .style("font-size", "12px");
 
         function update(selectedTeam, selectedYear) {
+          console.log("TeamPlayersTable", selectedTeam, selectedYear)
           var dr_hitter = [rows_hitter[0]], dr_pitcher = [rows_pitcher[0]]
           for(var i = 1; i < rows_hitter.length; i++) {
             if(rows_hitter[i][0] == selectedYear && rows_hitter[i][1] == selectedTeam) {
@@ -211,8 +212,8 @@ class TeamPlayersTable extends Component {
         d3.select("#selectButtonTeamTable").on("change", function(d) {
           // recover the option that has been chosen
           curTeam = d3.select(this).property("value")
-          console.log("curTeam", curTeam)
-          console.log("curYear", curYear)
+          // console.log("curTeam", curTeam)
+          // console.log("curYear", curYear)
           // run the updateChart function with this selected option
           update(curTeam, curYear)
         })
