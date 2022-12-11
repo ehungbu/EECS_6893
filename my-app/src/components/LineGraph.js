@@ -33,7 +33,7 @@ class LineGraph extends Component {
     }).then(_ => {
       // console.log(data[0])
       var allCat = ["score", "walks_issued", "total_bases", "strikeouts", "stolen_bases"]
-      var teams = ["STL", "PIT", "TOR", "TB", "NYM", "KC", "SF", "MIL", "MIN", "BAL", "SEA", "TEX", "WSH", "ATL", "PHI", "CIN", "LAD", "SD", "COL", "ARI", "CHC", "LAA", "CHW", "OAK", "HOU", "NYY", "BOS", "CLE", "DET"]
+      var teams = ["STL", "PIT", "TOR", "TB", "NYM", "KC", "SF", "MIL", "MIN", "BAL", "SEA", "TEX", "WSH", "ATL", "PHI", "CIN", "LAD", "SD", "COL", "ARI", "CHC", "LAA", "CHW", "OAK", "HOU", "NYY", "BOS", "CLE", "DET"].sort()
       d3.select("#selectButtonTeam")
         .selectAll('myOptions')
         .data(teams)

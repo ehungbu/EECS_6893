@@ -39,7 +39,7 @@ class Spider extends Component {
       data.push(d)
     }).then(_ => {
       console.log(data[0])
-      var teams = ["STL", "PIT", "TOR", "TB", "NYM", "KC", "SF", "MIL", "MIN", "BAL", "SEA", "TEX", "WSH", "ATL", "PHI", "CIN", "LAD", "SD", "COL", "ARI", "CHC", "LAA", "CHW", "OAK", "HOU", "NYY", "BOS", "CLE", "DET"]
+      var teams = ["STL", "PIT", "TOR", "TB", "NYM", "KC", "SF", "MIL", "MIN", "BAL", "SEA", "TEX", "WSH", "ATL", "PHI", "CIN", "LAD", "SD", "COL", "ARI", "CHC", "LAA", "CHW", "OAK", "HOU", "NYY", "BOS", "CLE", "DET"].sort()
       var years = ["2016", "2017", "2018", "2019", "2020", "2021"]
       var point = {}
       var curTeam = "STL", curYear = "2016"

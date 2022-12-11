@@ -28,7 +28,7 @@ class TeamPlayersTable extends Component {
         pitcher_data = [cols_pitcher].concat(pitcher_data)
         // console.log(hitter_data)
         // console.log(pitcher_data)
-        var teams = ["STL", "PIT", "TOR", "TB", "NYM", "KC", "SF", "MIL", "MIN", "BAL", "SEA", "TEX", "WSH", "ATL", "PHI", "CIN", "LAD", "SD", "COL", "ARI", "CHC", "LAA", "CHW", "OAK", "HOU", "NYY", "BOS", "CLE", "DET"]
+        var teams = ["STL", "PIT", "TOR", "TB", "NYM", "KC", "SF", "MIL", "MIN", "BAL", "SEA", "TEX", "WSH", "ATL", "PHI", "CIN", "LAD", "SD", "COL", "ARI", "CHC", "LAA", "CHW", "OAK", "HOU", "NYY", "BOS", "CLE", "DET"].sort()
         var years = ["2016", "2017", "2018", "2019", "2020", "2021"]
         // var rows_hitter = d3.csvParseRows(hitter_data),
         //   rows_pitcher = d3.csvParseRows(pitcher_data),

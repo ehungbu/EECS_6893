@@ -206,14 +206,14 @@ class TopPlayers extends Component {
           pitcher_x.domain(new_pitch_data.map(function(d) { return d.name; }))
           svg1.selectAll(".myXaxis")
             .transition()
-            .duration(500)
+            .duration(1000)
             .call(pitcher_xAxis)
             .selectAll("text")
             .attr("transform", "rotate(-20)")
           hitter_x.domain(new_hitter_data.map(function(d) { return d.name; }))
           svg2.selectAll(".myXaxis")
             .transition()
-            .duration(500)
+            .duration(1000)
             .call(hitter_xAxis)
             .selectAll("text")
             .attr("transform", "rotate(-20)")
@@ -221,13 +221,13 @@ class TopPlayers extends Component {
           pitcher_y.domain([0, d3.max(new_pitch_data, function(d) {return +d.value; })]);
           svg1.selectAll(".myYaxis")
             .transition()
-            .duration(500)
+            .duration(1000)
             .call(pitcher_yAxis);
 
           hitter_y.domain([0, d3.max(new_hitter_data, function(d) {return +d.value; })]);
           svg2.selectAll(".myYaxis")
             .transition()
-            .duration(500)
+            .duration(1000)
             .call(hitter_yAxis);
 
           var pitcher_u = svg1.selectAll("rect").data(new_pitch_data)
@@ -236,7 +236,7 @@ class TopPlayers extends Component {
             .append("rect")
             .merge(pitcher_u)
             .transition()
-            .duration(500)
+            .duration(1000)
             .attr("x", function(d) { return pitcher_x(d.name); })
             .attr("y", function(d) { return pitcher_y(d.value); })
             .attr("width", pitcher_x.bandwidth())
@@ -250,7 +250,7 @@ class TopPlayers extends Component {
             .append("rect")
             .merge(hitter_u)
             .transition()
-            .duration(500)
+            .duration(1000)
             .attr("x", function(d) { return hitter_x(d.name); })
             .attr("y", function(d) { return hitter_y(d.value); })
             .attr("width", hitter_x.bandwidth())
