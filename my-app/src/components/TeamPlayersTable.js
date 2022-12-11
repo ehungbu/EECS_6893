@@ -55,6 +55,8 @@ class TeamPlayersTable extends Component {
           }
         }
 
+        // console.log(display_rows_pitcher)
+
         d3.select("#selectButtonTeamTable")
           .selectAll('myOptions')
           .data(teams)
@@ -152,7 +154,7 @@ class TeamPlayersTable extends Component {
             .enter().append("th")
             .merge(table_hitter)
             .transition()
-            .duration(100)
+            .duration(1000)
             .text(function(d) { return d; })
             .style("border", "1px black solid")
             .style("padding", "5px")
@@ -169,7 +171,7 @@ class TeamPlayersTable extends Component {
             .enter().append("td")
             .merge(table_hitter)
             .transition()
-            .duration(100)
+            .duration(1000)
             .style("border", "1px black solid")
             .style("padding", "5px")
             .text(function(d) { return d; })
@@ -182,7 +184,7 @@ class TeamPlayersTable extends Component {
             .enter().append("th")
             .merge(table_pitcher)
             .transition()
-            .duration(100)
+            .duration(1000)
             .text(function(d) { return d; })
             .style("border", "1px black solid")
             .style("padding", "5px")
@@ -199,7 +201,7 @@ class TeamPlayersTable extends Component {
             .enter().append("td")
             .merge(table_pitcher)
             .transition()
-            .duration(100)
+            .duration(1000)
             .style("border", "1px black solid")
             .style("padding", "5px")
             .text(function(d) { return d; })

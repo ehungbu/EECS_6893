@@ -24,21 +24,24 @@ class Spider extends Component {
       .attr("transform",
         "translate(" + margin.left + "," + margin.top + ")");
 
+    let team_rank_table = d3.select('#teamranktable').append('table')
+      .style("border-collapse", "collapse")
+      .style("margin", "auto")
+      .style("margin-top", "200px")
+      .style("border", "2px black solid")
+
 
     let radialScale = d3.scaleLinear()
       .domain([0,10])
       .range([0,200]);
     let ticks = [2,4,6,8,10];
 
-    let curTeam = "STL";
-    let curYear = "2016";
-
     let data = []
     d3.csv("https://raw.githubusercontent.com/ehungbu/EECS_6893/main/data.csv", function(d) {
       // console.log('data', data)
       data.push(d)
     }).then(_ => {
-      console.log(data[0])
+      // console.log(data[0])
       var teams = ["STL", "PIT", "TOR", "TB", "NYM", "KC", "SF", "MIL", "MIN", "BAL", "SEA", "TEX", "WSH", "ATL", "PHI", "CIN", "LAD", "SD", "COL", "ARI", "CHC", "LAA", "CHW", "OAK", "HOU", "NYY", "BOS", "CLE", "DET", "MIA"].sort()
       var years = ["2016", "2017", "2018", "2019", "2020", "2021"]
       var point = {}
@@ -91,6 +94,21 @@ class Spider extends Component {
         }
       }
 
+      let table_feature_array = [['Statistic', 'Value', 'League Ranking']]
+
+      for (const [key, value] of Object.entries(table_feature[0])) {
+        if (!key.includes("Ranking")) {
+          table_feature_array.push([key, parseInt(value), table_feature[0][key + " Ranking"]])
+        }
+      }
+      // console.log("table_feature_array", table_feature_array)
+
+      // let table_feature_array = [[], []]
+      // console.log('keys', Object.keys(table_feature[0]))
+      // table_feature_array[0] = Object.keys(table_feature[0])
+      // table_feature_array[1]= Object.values(table_feature[0])
+      // console.log(table_feature_array)
+
 
       d3.select("#selectButtonTeamSpider")
         .selectAll('myOptions')
@@ -128,20 +146,6 @@ class Spider extends Component {
         let x = Math.cos(angle) * radialScale(value);
         let y = Math.sin(angle) * radialScale(value);
         return {"x": 300 + x, "y": 300 - y};
-      }
-
-      function format_arr(data, team, season) {
-        var retdata = {}
-
-        for (var i = 0; i < data.length; i++) {
-          // console.log(data[i]['team'], data[i]['season'])
-          if (data[i]['team'] === team && data[i]['season'] === season) {
-            retdata['wins'] = data[i]['wins']
-            retdata['losses'] = data[i]['losses']
-            break;
-          }
-        }
-        return retdata;
       }
 
       for (var i = 0; i < features.length; i++) {
@@ -194,22 +198,39 @@ class Spider extends Component {
         .attr("stroke-opacity", 1)
         .attr("opacity", 0.5);
 
-      var tr = d3.select(".objecttable tbody")
-        .selectAll("tr")
-        .data(table_feature)
-        .enter().append("tr");
+      // headers
+      team_rank_table.append("thead").append("tr")
+        .selectAll("th")
+        .data(table_feature_array[0])
+        .enter().append("th")
+        .text(function(d) { return d; })
+        .style("border", "1px black solid")
+        .style("padding", "5px")
+        .style("background-color", "lightgray")
+        .style("font-weight", "bold")
+        .style("text-transform", "uppercase");
 
-      var td = tr.selectAll("td")
-        .data(function(d, i) { return Object.values(d); })
+      // data
+      team_rank_table.append("tbody")
+        .selectAll("tr").data(table_feature_array.slice(0))
+        .enter().append("tr")
+        .selectAll("td")
+        .data(function(d){return d;})
         .enter().append("td")
-        .text(function(d) { return d; });
+        .style("border", "1px black solid")
+        .style("padding", "5px")
+        .on("mouseover", function(){
+          d3.select(this).style("background-color", "powderblue");
+        })
+        .on("mouseout", function(){
+          d3.select(this).style("background-color", "white");
+        })
+        .text(function(d){return d;})
+        .style("font-size", "12px");
 
 
       function update(selectedTeam, selectedYear) {
-        d3.select('#my_dataviz')
-          .select('svg')
-          .remove();
-
+        console.log("update spider:", selectedTeam, selectedYear)
         var newpoint = {}
         mx_score = 0
         mx_so = 0
@@ -272,14 +293,52 @@ class Spider extends Component {
           .duration(1000)
           .attr("d",line)
 
-        tr.data(table_feature)
-          .transition()
-          .duration(100);
 
-        td.data(function(d, i) { return Object.values(d); })
+        // let table_feature_array = [[], []]
+        // console.log('keys', Object.keys(table_feature[0]))
+        // table_feature_array[0] = Object.keys(table_feature[0])
+        // table_feature_array[1]= Object.values(table_feature[0])
+        // console.log(table_feature_array)
+
+        let table_feature_array = [['Statistic', 'Value', 'League Ranking']]
+
+        for (const [key, value] of Object.entries(table_feature[0])) {
+          if (!key.includes("Ranking")) {
+            table_feature_array.push([key, parseInt(value), table_feature[0][key + " Ranking"]])
+          }
+          // console.log(key, value);
+        }
+        // console.log("table_feature_array", table_feature_array)
+
+        team_rank_table.selectAll("tr").remove()
+        team_rank_table.append("thead").append("tr")
+          .selectAll("th")
+          .data(table_feature_array[0])
+          .enter().append("th")
+          .merge(team_rank_table)
           .transition()
-          .duration(100)
-          .text(function(d) { return d; });
+          .duration(1000)
+          .text(function(d) { return d; })
+          .style("border", "1px black solid")
+          .style("padding", "5px")
+          .style("background-color", "lightgray")
+          .style("font-weight", "bold")
+          .style("text-transform", "uppercase");
+
+        team_rank_table
+          .selectAll('tr')
+          .data(table_feature_array.slice(0))
+          .enter().append("tr")
+          .selectAll("td")
+          .data(function(d){return d;})
+          .enter().append("td")
+          .merge(team_rank_table)
+          .transition()
+          .duration(1000)
+          .style("border", "1px black solid")
+          .style("padding", "5px")
+          .text(function(d) { return d; })
+          .style("font-size", "12px");
       }
 
       update(curTeam, curYear);
@@ -288,8 +347,8 @@ class Spider extends Component {
       d3.select("#selectButtonTeamSpider").on("change", function(d) {
         // recover the option that has been chosen
         curTeam = d3.select(this).property("value")
-        console.log("curTeam", curTeam)
-        console.log("curYear", curYear)
+        // console.log("curTeam", curTeam)
+        // console.log("curYear", curYear)
         // run the updateChart function with this selected option
         update(curTeam, curYear)
       })

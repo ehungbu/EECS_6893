@@ -22,7 +22,7 @@ export function Team() {
       <select id="selectButtonTeamTable" hidden></select>
       <select id="selectButtonSeasonSpider" hidden></select>
       <select id="selectButtonTeamSpider" hidden></select>
-      <Spider></Spider>
+
       <Container>
         <Row>
           <Col>
@@ -37,8 +37,15 @@ export function Team() {
           </Col>
         </Row>
         <Row>
-          <div id="mydataviz"></div>
-          <div id="spider"></div>
+          <Spider></Spider>
+          <Col>
+            <div id="teamranktable"></div>
+          </Col>
+          <Col>
+            <div id="spider"></div>
+          </Col>
+
+
         </Row>
         <Row>
           <TeamPlayersTable></TeamPlayersTable>
