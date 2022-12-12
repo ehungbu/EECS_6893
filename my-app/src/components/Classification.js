@@ -27,7 +27,7 @@ class Classification extends Component {
     var curMatch = "ARI-SF"
 
     let data = []
-    d3.csv("https://raw.githubusercontent.com/ehungbu/EECS_6893/main/classification.csv", function(d) {
+    d3.csv("https://raw.githubusercontent.com/ehungbu/EECS_6893/main/data_processed/classification.csv", function(d) {
       data.push(d)
     }).then(_ => {
       var dateCol = [...new Set(data.map(function(d) {return d.date}))]

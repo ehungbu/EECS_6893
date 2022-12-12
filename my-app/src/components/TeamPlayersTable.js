@@ -16,11 +16,11 @@ class TeamPlayersTable extends Component {
     let pitcher_data = []
     let cols_hitter;
     let cols_pitcher;
-    d3.csv('https://raw.githubusercontent.com/ehungbu/EECS_6893/main/hitter_data.csv', function (hd) {
+    d3.csv('https://raw.githubusercontent.com/ehungbu/EECS_6893/main/data_processed/hitter_data.csv', function (hd) {
       cols_hitter = Object.keys(hd)
       hitter_data.push(Object.values(hd))
     }).then(_ => {
-      d3.csv('https://raw.githubusercontent.com/ehungbu/EECS_6893/main/pitcher_data.csv', function (pd) {
+      d3.csv('https://raw.githubusercontent.com/ehungbu/EECS_6893/main/data_processed/pitcher_data.csv', function (pd) {
         cols_pitcher = Object.keys(pd)
         pitcher_data.push(Object.values(pd))
       }).then(_ => {

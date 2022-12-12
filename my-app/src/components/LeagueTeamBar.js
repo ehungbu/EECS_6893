@@ -27,7 +27,7 @@ class LeagueTeamBar extends Component {
     let curCat = "score";
 
     let data = []
-    d3.csv("https://raw.githubusercontent.com/ehungbu/EECS_6893/main/data.csv", function(d) {
+    d3.csv("https://raw.githubusercontent.com/ehungbu/EECS_6893/main/data_processed/data.csv", function(d) {
       // console.log('data', data)
       data.push(d)
     }).then(_ => {

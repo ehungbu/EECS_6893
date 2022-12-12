@@ -33,11 +33,11 @@ class TopPlayers extends Component {
 
     let hitter_data = []
     let pitcher_data = []
-    d3.csv('https://raw.githubusercontent.com/ehungbu/EECS_6893/main/hitter_top10.csv', function (hd) {
+    d3.csv('https://raw.githubusercontent.com/ehungbu/EECS_6893/main/data_processed/hitter_top10.csv', function (hd) {
       // console.log('data', data)
       hitter_data.push(hd)
     }).then(_ => {
-      d3.csv('https://raw.githubusercontent.com/ehungbu/EECS_6893/main/pitcher_top10.csv', function (pd) {
+      d3.csv('https://raw.githubusercontent.com/ehungbu/EECS_6893/main/data_processed/pitcher_top10.csv', function (pd) {
         pitcher_data.push(pd)
       }).then(_ => {
         console.log(hitter_data[0])

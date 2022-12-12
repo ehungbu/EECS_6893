@@ -1,9 +1,6 @@
 // components/Home.js
 import React from 'react';
-import {Button, Col, Row, Card, Badge} from "react-bootstrap";
-import { useState } from 'react';
-import { useNavigate } from 'react-router-dom';
-import SearchBar from './SearchBar';
+import {Button} from "react-bootstrap";
 import {Heading} from "@aws-amplify/ui-react";
 
 
