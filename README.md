@@ -9,4 +9,10 @@ Project link: https://main.d11gneh2dkk561.amplifyapp.com/
 ## Summary
 `./visualizations` directory contains html files containing our d3 visualizations.
 
-`./my-app` contains our front end created in react
+`./my-app` directory contains our front end created in react
+
+`./notebooks` directory contains jupyter notebooks containing our python code
+
+`./data_processed` directory contains csv data after pre-processing
+
+`./amplify.yaml` file contains instructions for deploying react front end on aws amplify
