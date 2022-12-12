@@ -1,0 +1,18 @@
+version: 1
+frontend:
+  phases:
+    # IMPORTANT - Please verify your build commands
+    preBuild:
+      commands:
+        - cd my-app
+        - npm ci
+    build:
+      commands:
+        - npm run build
+  artifacts:
+    # IMPORTANT - Please verify your build output directory
+    baseDirectory: ./my-app/build
+    files:
+      - '**/*'
+  cache:
+    paths: []
