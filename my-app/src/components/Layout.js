@@ -11,10 +11,10 @@ export function Layout() {
       <Heading level={1}>MLB Outcome Predictor</Heading>
       <br/>
       <nav>
-        <Button onClick={() => navigate('/')}>Home</Button>
-        <Button onClick={() => navigate('/predict')}>
-          Predictor
-        </Button>
+        <Button onClick={() => navigate('/')}>Predict</Button>
+        {/*<Button onClick={() => navigate('/predict')}>*/}
+          {/*Predictor*/}
+        {/*</Button>*/}
         <Button onClick={() => navigate('/league')}>
           League
         </Button>
