@@ -1,35 +1,29 @@
 // components/Predict.js
-import { Heading } from '@aws-amplify/ui-react';
-import {Button, Card, Col, Row} from "react-bootstrap";
-import { useState } from 'react';
-import SearchBar from "./SearchBar";
+import React from 'react';
+import {Heading} from "@aws-amplify/ui-react";
+import Classification from "./Classification";
+import {Col, Container, Row} from "react-bootstrap";
 // import React from "@types/react";
 
 export function Predict() {
-  const [inputs, setInputs] = useState({});
-
-  const handleChange = (event) => {
-    const name = event.target.name;
-    const value = event.target.value;
-    setInputs(values => ({...values, [name]: value}))
-    console.log(inputs)
-  }
-
-  function handleSearchUserQuery(event) {
-    console.log(inputs)
-  }
-
   return (
     <div>
+      <Heading level={2}>Prediction Result</Heading>
+      Select Year:
+      <select id="selectButtonDate"></select>
       <br/>
-      <Heading level={2}>Predict Your MLB Outcome!</Heading>
       <br/>
+      Select Match:
+      <select id="selectButtonMatch"></select>
 
-      <SearchBar
-        handleSubmit={handleSearchUserQuery}
-        handleChange={handleChange}
-        inputs={inputs}>
-      </SearchBar>
+      <div id="chart">
+          <Classification></Classification>
+        </div>
+      <br/>
+      <br/>
+      <br/>
+      <br/>
+      
     </div>
   )
 }

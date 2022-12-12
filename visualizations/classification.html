@@ -33,14 +33,9 @@ var margin = {top: 20, right: 50, bottom: 50, left: 60},
     height = 0;
 
 // append the svg object to the body of the page
-var svg = d3.select("#chart")
-  .append("svg")
-    .attr("width", width + margin.left + margin.right)
-    .attr("height", height + margin.top + margin.bottom)
-  .append("g")
-    .attr("transform",
-          "translate(" + margin.left + "," + margin.top + ")");
-
+var table = d3.select('#chart').append('table')
+                  .style("border-collapse", "collapse")
+                  .style("border", "2px black solid")
 var curDate = "2019/08/18"
 var curMatch = "ARI-SF"
 
@@ -56,10 +51,7 @@ d3.csv('https://raw.githubusercontent.com/ehungbu/EECS_6893/main/classification.
   var displayData = data.filter(function(d){
     return d['date'] === curDate && d['team1'] === strArray[0] && d['team2'] == strArray[1];
   })
-  var table = d3.select('#chart').append('table')
-                  .style("border-collapse", "collapse")
-                  .style("border", "2px black solid"),
-      table_column = ['date', 'team1','team2','team1_pred_score','team2_pred_score','team1_act_score','team2_act_score']
+  var table_column = ['date', 'team1','team2','team1_pred_score','team2_pred_score','team1_act_score','team2_act_score']
   console.log(displayData)
   
   d3.select("#selectButtonDate")
