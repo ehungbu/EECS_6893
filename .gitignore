@@ -4,3 +4,6 @@
 .idea/EECS_6893.iml
 .idea/workspace.xml
 .DS_Store
+notebooks/.ipynb_checkpoints/Player Data filtering-checkpoint.ipynb
+notebooks/.ipynb_checkpoints/Visualization-checkpoint.ipynb
+notebooks/.ipynb_checkpoints/Classification-checkpoint.ipynb
