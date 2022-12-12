@@ -34,14 +34,16 @@ class TeamPlayersTable extends Component {
         //   rows_pitcher = d3.csvParseRows(pitcher_data),
         var rows_hitter = hitter_data,
           rows_pitcher = pitcher_data,
-          table_hitter = d3.select('#tablehitters').append('table')
-            .style("border-collapse", "collapse")
-            .style("border", "2px black solid"),
+          table_hitter = d3.select('#tablehitters'),
           caption_hitter = table_hitter.append("caption").style("font-size", "20px").text("Hitter");
-        var table_pitcher = d3.select('#tablepitchers').append('table')
+        table_hitter.append('table')
+            .style("border-collapse", "collapse")
+            .style("border", "2px black solid")
+        var table_pitcher = d3.select('#tablepitchers');
+        var caption_pitcher = table_pitcher.append("caption").style("font-size", "20px").text("Pitcher");
+        table_pitcher.append('table')
           .style("border-collapse", "collapse")
           .style("border", "2px black solid");
-        var caption_pitcher = table_pitcher.append("caption").style("font-size", "20px").text("Pitcher");
         var display_rows_hitter = [rows_hitter[0]],
           display_rows_pitcher = [rows_pitcher[0]]
         for(var i = 0; i < rows_hitter.length; i++) {
