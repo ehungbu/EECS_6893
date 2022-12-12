@@ -1,6 +1,5 @@
 // components/Team.js
 import React from 'react';
-import {Heading} from "@aws-amplify/ui-react";
 import LeagueTeamBar from "./LeagueTeamBar";
 import {Col, Container, Row} from "react-bootstrap";
 import TopPlayers from "./TopPlayers";
@@ -9,7 +8,8 @@ import TopPlayers from "./TopPlayers";
 export function League() {
   return (
     <div>
-      <Heading level={2}>League Visualizations</Heading>
+      <h2 className='mb-3'>League Visualizations</h2>
+      <br/>
       Select Year:
       <select id="selectButtonSeason"></select>
       <br/>

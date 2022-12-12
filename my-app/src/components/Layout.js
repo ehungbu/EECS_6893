@@ -1,24 +1,21 @@
 // components/Layout.js
 import React from 'react';
 import { Outlet, useNavigate } from 'react-router-dom';
-import { useAuthenticator, Button, Heading, View } from '@aws-amplify/ui-react';
+import Button from 'react-bootstrap/Button';
 
 export function Layout() {
   const navigate = useNavigate();
 
   return (
     <>
-      <Heading level={1}>MLB Outcome Predictor</Heading>
+      <h1 className='mb-3'>MLB Outcome Predictor</h1>
       <br/>
       <nav>
-        <Button onClick={() => navigate('/')}>Predict</Button>
-        {/*<Button onClick={() => navigate('/predict')}>*/}
-          {/*Predictor*/}
-        {/*</Button>*/}
-        <Button onClick={() => navigate('/league')}>
+        <Button variant="outline-primary" onClick={() => navigate('/')}>Predict</Button>
+        <Button variant="outline-primary" onClick={() => navigate('/league')}>
           League
         </Button>
-        <Button onClick={() => navigate('/team')}>
+        <Button variant="outline-primary" onClick={() => navigate('/team')}>
           Team
         </Button>
       </nav>

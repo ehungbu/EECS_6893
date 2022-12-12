@@ -7,12 +7,10 @@ import Spider from "./Spider"
 import { Container, Col, Row} from "react-bootstrap";
 import TeamPlayersTable from "./TeamPlayersTable";
 
-
-
 export function Team() {
   return (
     <div>
-      <Heading level={2}>Team</Heading>
+      <h2 className='mb-3'>Team Visualizations</h2>
       <br/>
       <select id="selectButtonTeam"></select>
       <select id="selectButtonTeamPie" hidden></select>

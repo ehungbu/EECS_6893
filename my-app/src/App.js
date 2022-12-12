@@ -23,10 +23,6 @@ function MyRoutes() {
       <Routes>
         <Route path="/" element={<Layout />}>
           <Route index element={<Predict />} />
-          {/*<Route*/}
-          {/*  path="/predict"*/}
-          {/*  element={<Predict />}*/}
-          {/*/>*/}
           <Route
             path="/league"
             element= {<League />}
