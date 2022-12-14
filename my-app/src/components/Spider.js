@@ -45,7 +45,7 @@ class Spider extends Component {
       var teams = ["STL", "PIT", "TOR", "TB", "NYM", "KC", "SF", "MIL", "MIN", "BAL", "SEA", "TEX", "WSH", "ATL", "PHI", "CIN", "LAD", "SD", "COL", "ARI", "CHC", "LAA", "CHW", "OAK", "HOU", "NYY", "BOS", "CLE", "DET", "MIA"].sort()
       var years = ["2016", "2017", "2018", "2019", "2020", "2021"]
       var point = {}
-      var curTeam = "STL", curYear = "2016"
+      var curTeam = "ARI", curYear = "2016"
       var mx_score = 0, mx_so = 0, mx_sb = 0, mx_tb = 0, mx_wi = 0
       for(var i = 0; i < data.length; i++) {
         if(data[i]['season'] == curYear) {

@@ -196,7 +196,7 @@ class Pie extends Component {
         update(selectedTeam, selectedOption)
       })
 
-      var selectedTeam = "STL"
+      var selectedTeam = "ARI"
       var selectedYear = "2016"
       update(selectedTeam, selectedYear);
     })
