@@ -7,7 +7,7 @@ export function Predict() {
     <div>
       <h2 className='mb-3'>Prediction Result</h2>
       <br/>
-      Select Year:
+      Select Date:
       <select id="selectButtonDate"></select>
       <br/>
       <br/>
