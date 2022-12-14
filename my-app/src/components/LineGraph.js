@@ -23,7 +23,7 @@ class LineGraph extends Component {
       .append("g")
       .attr("transform",
         "translate(" + margin.left + "," + margin.top + ")");
-    let curTeam = "STL";
+    let curTeam = "ARI";
     let curCat = "score";
     // console.log('line:', curTeam, curCat)
     let data = []

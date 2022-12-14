@@ -9,7 +9,7 @@ class TeamPlayersTable extends Component {
   drawChart() {
     console.log("TeamPlayersTable Component")
 
-    let curTeam = "STL";
+    let curTeam = "ARI";
     let curYear = "2016"
 
     let hitter_data = []
