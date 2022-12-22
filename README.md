@@ -9,6 +9,8 @@ Project link: https://main.d11gneh2dkk561.amplifyapp.com/
 ## Summary
 `./visualizations` directory contains html files containing our d3 visualizations.
 
+`./mlb_data` directory contains raw csv files downloaded from [Kaggle MLB Game Dataset](https://www.kaggle.com/datasets/josephvm/mlb-game-data)
+
 `./my-app` directory contains our front end created in react
 
 `./notebooks` directory contains jupyter notebooks containing our python code
